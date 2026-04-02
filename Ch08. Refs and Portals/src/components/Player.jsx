@@ -1,30 +1,23 @@
 /* Task 1: Let the input name be reflected in the h2 element */
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function Player() {
 
-  /* Problem: Whenever there is a key stroke, h2 element gets
-  updated in real-time even though change has not been submitted yet.
-  There are ways to get around, but there already is enough code. */
-
+  const playerName = useRef(null);
   const [enteredName, setEnteredName] = useState(null);
-  const [nameSubmitted, setNameSubmitted] = useState(false);
-
-  function handleNameChange(event) {
-    setNameSubmitted(false);
-    setEnteredName(event.target.value);
-  }
 
   function handleSetName() {
-    setNameSubmitted(true);
+    setEnteredName(playerName.current.value)
+    playerName.current.value = "" // Not declarative 
   }
 
   return (
     <section id="player">
-      <h2>Welcome {nameSubmitted ? enteredName : "unknown entity"}</h2>
+      <h2>Welcome { enteredName ?? "unknown entity"}</h2>
       <p>
-        <input type="text" onChange={handleNameChange} value={enteredName}/>
+        {/* React sets the current property of the ref object to that DOM node (ie., Now methods of <input> can be accessed) */}
+        <input type="text" ref={playerName}/>
         <button onClick={handleSetName}>Set Name</button>
       </p>
     </section>
