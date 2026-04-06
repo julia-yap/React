@@ -1,8 +1,23 @@
+import { useImperativeHandle, useRef } from "react";
+
 export default function ResultModal({ ref, result, targetTime }) {
+  const dialog = useRef();
+
+  // Detaching TimerChallenge from ResultModal (i.e., if ResultModal
+  // was to return a div instead of dialog, we just need to adjust the
+  // code inside open function.)
+  useImperativeHandle(ref, () => {
+    return {
+      open() {
+        dialog.current.showModal();
+      },
+    };
+  });
+
   // The built-in backdrop accompanied by dialog needs to be opened
   // programmatically. A ref comes handy in this scenario.
   return (
-    <dialog className="result-modal" ref={ref}>
+    <dialog className="result-modal" ref={dialog}>
       {/* An overlay */}
       <h2> You {result}!</h2>
       <p>
