@@ -1,4 +1,5 @@
 import { useImperativeHandle, useRef } from "react";
+import { createPortal } from "react-dom";
 
 export default function ResultModal({
   ref,
@@ -25,7 +26,7 @@ export default function ResultModal({
 
   // The built-in backdrop accompanied by dialog needs to be opened
   // programmatically. A ref comes handy in this scenario.
-  return (
+  return createPortal(
     <dialog className="result-modal" ref={dialog}>
       {/* An overlay */}
       {userLost && <h2> You lost!</h2>}
@@ -41,6 +42,7 @@ export default function ResultModal({
         {/* A button inside a dialog form will always close the dialog */}
         <button>Close</button>
       </form>
-    </dialog>
+    </dialog>,
+    document.getElementById("modal")
   );
 }
