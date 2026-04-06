@@ -6,6 +6,14 @@ export default function Player() {
 
   const playerName = useRef(null);
   const [enteredName, setEnteredName] = useState(null);
+  
+  /* 
+  Why do we need state even at this point and not modify the name directly through a ref?
+      - In the first render cycle, the connection to the input ref is not established yet,
+        thus accessing playerName.current.value results in an error.
+      - Change in the ref value does not cause React to rerender 
+          => Change in value isn't reflected immediately
+  */
 
   function handleSetName() {
     setEnteredName(playerName.current.value)
