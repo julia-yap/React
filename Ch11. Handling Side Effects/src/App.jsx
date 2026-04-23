@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 
 import Places from "./components/Places.jsx";
 import { AVAILABLE_PLACES } from "./data.js";
@@ -17,8 +17,8 @@ const storedPlaces = storedIds.map((id) =>
 );
 
 function App() {
-  const modal = useRef();
   const selectedPlace = useRef();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [availablePlaces, setAvialablePlaces] = useState([]);
   const [pickedPlaces, setPickedPlaces] = useState(storedPlaces);
 
@@ -55,12 +55,12 @@ function App() {
   // it is only executed once. If omitted, it is executed at every render cycle.
 
   function handleStartRemovePlace(id) {
-    modal.current.open();
+    setModalIsOpen(true);
     selectedPlace.current = id;
   }
 
   function handleStopRemovePlace() {
-    modal.current.close();
+    setModalIsOpen(false);
   }
 
   function handleSelectPlace(id) {
@@ -84,22 +84,23 @@ function App() {
     }
   }
 
-  function handleRemovePlace() {
+  // useCallback prevents recreation of function, rather store internally in memory
+  const handleRemovePlace = useCallback(function handleRemovePlace() {
     setPickedPlaces((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current),
     );
-    modal.current.close();
+    setModalIsOpen(false);
 
     const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
     localStorage.setItem(
       "selectedPlaces",
       JSON.stringify(storedIds.filter((id) => id !== selectedPlace.current)),
     );
-  }
+  }, []);
 
   return (
     <>
-      <Modal ref={modal}>
+      <Modal open={modalIsOpen}>
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
           onConfirm={handleRemovePlace}

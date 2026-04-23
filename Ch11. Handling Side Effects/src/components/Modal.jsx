@@ -1,24 +1,26 @@
-import { forwardRef, useImperativeHandle, useRef } from 'react';
-import { createPortal } from 'react-dom';
+import { forwardRef, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 
-export default function Modal({ ref, children }) {
+export default function Modal({ open, children }) {
   const dialog = useRef();
 
-  useImperativeHandle(ref, () => {
-    return {
-      open: () => {
-        dialog.current.showModal();
-      },
-      close: () => {
-        dialog.current.close();
-      },
-    };
-  });
+  useEffect(() => {
+    // Runs into an error in the first render cycle,
+    // because dialog reference has not been established yet.
+    // SOLUTION: useEffect
+    if (open) {
+      dialog.current.showModal();
+    } else {
+      dialog.current.close();
+    }
+  }, [open]);
+  // Dependencies: states or props whose values when changed makes
+  // the code to execute again
 
   return createPortal(
     <dialog className="modal" ref={dialog}>
-      {children}
+      {open ? children : null}
     </dialog>,
-    document.getElementById('modal')
+    document.getElementById("modal"),
   );
-};
+}
