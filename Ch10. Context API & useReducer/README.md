@@ -1,13 +1,8 @@
-The problem of hsared state: prop drilling
-state lifted up to the component with access to all children components, and passe dthrough prop across multiple layers of components even though most don't need that data directly => less reusable, lots of extra boilerplate code
+## Contexts and Reducers
+Using internal states with `useState()` often accompanies the problem of prop drilling, where shared states get passed across multiple layers of components even when some or most don't need direct access to the data, leading to a less reusable code with lots of extra boilerplates.
 
-a sltn: embracing component composition
+One solution is embracing component composition. Another is to share states with `Context` whose API can wrap multiple, if not all, components, and allow react states to connect with the context value, using `useContext` or `use` (latter is more flexible and can be used inside `if` blocks). Like states, when context value changes, the component function using it gets reexecuted by React. 
 
-sharing state with context
-context api 
-sharing data across layers made easy 
-wrap multiple/all components 
-react state connected to context value, dont' have to pass through props, anything that needs it can directly reach out to it
+Context management is made easier with reducers, essentially allowing a context API. `useReducers` dispatch actions on the latest snapshot of states, which is equivalent to prevState often encountered with `setState` operations. 
 
-
-managing complex state with reducers
+which allows the operations to be outside of the App component and move into the context file. It also works off of the latest snapshot of the state (~prevState used in setState)
