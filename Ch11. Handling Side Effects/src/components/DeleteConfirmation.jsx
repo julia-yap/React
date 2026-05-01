@@ -32,16 +32,6 @@ export default function DeleteConfirmation({ onConfirm, onCancel }) {
     // SOLUTION: useCallback wrapper around handleRemovePlace in the App component
   }, [onConfirm]);
 
-  // Can control stopping the timer
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      onConfirm();
-    }, 3000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
-
   return (
     <div id="delete-confirmation">
       <h2>Are you sure?</h2>
