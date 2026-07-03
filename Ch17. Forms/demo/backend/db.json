@@ -1,0 +1,39 @@
+{
+  "opinions": [
+    {
+      "id": 1783104918856,
+      "votes": -3,
+      "userName": "julia",
+      "title": "a;ldkjfa",
+      "body": "a;elijra;eijr"
+    },
+    {
+      "id": 1783104592514,
+      "votes": -10,
+      "userName": "mark",
+      "title": "gonzalez",
+      "body": "fifa worldcup 2026"
+    },
+    {
+      "id": 1783104591507,
+      "votes": 3,
+      "userName": "mark",
+      "title": "gonzalez",
+      "body": "fifa worldcup 2026"
+    },
+    {
+      "id": 1,
+      "userName": "Maximilian Schwarzmüller",
+      "title": "Do yourself a favor and learn React!",
+      "body": "React is an amazing JavaScript library!\n\nDespite all it's shortcomings.",
+      "votes": 0
+    },
+    {
+      "id": 2,
+      "userName": "Maximilian Schwarzmüller",
+      "title": "React has more depth than you might first think!",
+      "body": "React is a great library to learn, but it's not just about the basics. Dive deeper!\nFor example with this course!",
+      "votes": 0
+    }
+  ]
+}
