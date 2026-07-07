@@ -31,3 +31,4 @@ meals menu (3 columns per row)
 Plan
 Step1. Add the Header component
 Step2. Add the Meals component
+Step3. Create Cart context
