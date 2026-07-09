@@ -4,7 +4,7 @@ import logoImg from "../assets/logo.jpg";
 import Button from "./UI/Button";
 import { CartContext } from "../store/CartContext";
 
-export default function Header() {
+export default function Header({ onCartClick }) {
   const cartCtx = useContext(CartContext);
 
   const totalCartItems = cartCtx.items.reduce((totalCount, item) => {
@@ -17,7 +17,7 @@ export default function Header() {
         <img src={logoImg} alt="logo" />
         <h1>ReactFood</h1>
       </div>
-      <Button textOnly>Cart ({totalCartItems})</Button>
+      <Button textOnly onClick={onCartClick}>Cart ({totalCartItems})</Button>
     </header>
   );
 }

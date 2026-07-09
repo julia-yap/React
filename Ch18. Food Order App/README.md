@@ -32,3 +32,4 @@ Plan
 Step1. Add the Header component
 Step2. Add the Meals component
 Step3. Create Cart context
+Step4. Cart modal

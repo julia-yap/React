@@ -25,7 +25,7 @@ function cartReducer(state, action) {
       updatedItems[existingItemCartIndex] = updatedItem;
     } else {
       updatedItems.push({
-        ...action.items,
+        ...action.item,
         quantity: 1,
       });
     }
@@ -42,7 +42,7 @@ function cartReducer(state, action) {
 
     // Check if item already exists in cart
     const existingItemCartIndex = updatedItems.findIndex(
-      (item) => item.id === action.item.id,
+      (item) => item.id === action.id,
     );
     const existingItem = updatedItems[existingItemCartIndex];
 

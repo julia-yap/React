@@ -1,24 +1,38 @@
+import Cart from "./components/Cart";
 import Header from "./components/Header";
 import Meals from "./components/Meals";
+import Modal from "./components/Modal";
 import CartContextProvider from "./store/CartContext";
 
 import { useState } from "react";
 
 function App() {
-  
-  const [cart, setCart] = useState({
-    count: 0,
-    total: 0, 
-    items: {}
-  });
+  const [cartIsOpen, setCartIsOpen] = useState(false);
+  const [checkoutIsOpen, setCheckoutIsOpen] = useState(false);
 
-  function handleAddToCart() {
+  function handleOpenCart() {
+    setCartIsOpen(true);
+  }
 
+  function handleCloseCart() {
+    setCartIsOpen(false);
+  }
+
+  function handleOpenCheckout() {
+    handleCloseCart();
+    setCheckoutIsOpen(true);
+  }
+
+  function handleCloseCheckout() {
+    setCheckoutIsOpen(false);
   }
 
   return (
     <CartContextProvider>
-      <Header />
+      <Modal open={cartIsOpen}>
+        <Cart onClose={handleCloseCart} onOpenCheckout={handleOpenCheckout}/>
+      </Modal>
+      <Header onCartClick={handleOpenCart}/>
       <Meals />
     </CartContextProvider>
   );
