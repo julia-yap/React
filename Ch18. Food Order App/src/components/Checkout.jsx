@@ -23,7 +23,7 @@ export default function Checkout() {
 
   const {
     data,
-    isLoading: isSending,
+    isLoading,
     error,
     sendRequest,
     clearData,
