@@ -1,26 +1,30 @@
-import { useEffect, useState } from "react";
 import MealItem from "./MealItem";
+import { useHttp } from "../hooks/useHttp.js";
+
+// Passing {} directly to useHttp hook results in the infinite
+// recreation of the plain javascript object, hence infinite calls to the hook.
+// Define it outside.
+const requestConfig = {};
 
 export default function Meals() {
-  const [meals, setMeals] = useState([]);
+  const {
+    data: meals,
+    isLoading,
+    error,
+  } = useHttp("http://localhost:3000/meals", requestConfig, []);
 
-  useEffect(() => {
-    async function fetchMeals() {
-      const res = await fetch("http://localhost:3000/meals");
-      if (!res.ok) {
-        throw new Error("Failed to fetch meals.");
-      }
-      const data = await res.json();
-      setMeals(data);
-    }
-
-    fetchMeals();
-  }, []);
+  // Since request takes some time, meals is undefined initially.
+  // Remember, isLoading changes within the useEffect call, which 
+  // is after the component renders. It's crucial to pass in an 
+  // initialData value to useHttp hook.
+  if (isLoading) {
+    return <p>Fetching meals...</p>
+  }
 
   return (
     <ul id="meals">
       {meals.map((meal) => (
-        <MealItem key={meal.id} item={meal}/>
+        <MealItem key={meal.id} item={meal} />
       ))}
     </ul>
   );
