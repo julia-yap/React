@@ -1,5 +1,6 @@
 import MealItem from "./MealItem";
 import { useHttp } from "../hooks/useHttp.js";
+import Error from "./Error.jsx";
 
 // Passing {} directly to useHttp hook results in the infinite
 // recreation of the plain javascript object, hence infinite calls to the hook.
@@ -18,7 +19,11 @@ export default function Meals() {
   // is after the component renders. It's crucial to pass in an 
   // initialData value to useHttp hook.
   if (isLoading) {
-    return <p>Fetching meals...</p>
+    return <p className="center">Fetching meals...</p>
+  }
+
+  if (error) {
+    return <Error title="Failed to fetch meals" message={error} />
   }
 
   return (

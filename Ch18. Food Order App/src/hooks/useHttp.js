@@ -17,12 +17,16 @@ export function useHttp(url, config, initialData) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
+  function clearData() {
+    setData(initialData);
+  }
+
   // To prevent infinite loop between useEffect and recreation of function
   const sendRequest = useCallback(
-    async function sendRequest() {
+    async function sendRequest(data) {
       setIsLoading(true);
       try {
-        const resData = await sendHTTPRequest(url, config);
+        const resData = await sendHTTPRequest(url, { ...config, body: data });
         setData(resData);
       } catch (error) {
         setError(error.message || "Failed to send request.");
@@ -38,7 +42,7 @@ export function useHttp(url, config, initialData) {
     // Gets called whenever the component that uses this loads
     // To prevent this, add a check (i.e., we don't want this behaviour
     // for the checkout component)
-    if (config && (config.method == "GET" || !config.method) || !config) {
+    if ((config && (config.method == "GET" || !config.method)) || !config) {
       sendRequest();
     }
   }, [sendRequest, config]); // sendRequest is defined outside, so it's a dependency
@@ -50,5 +54,6 @@ export function useHttp(url, config, initialData) {
     isLoading,
     error,
     sendRequest,
+    clearData,
   };
 }
