@@ -27,3 +27,10 @@ how does redux work
 
 
 ## Working with Redux Toolkit
+Easier way to work with Redux
+As the application grows,
+    there can be typos or clashing action type names
+    massive list of states to handle and return at every action dispatch (longer reducer function)
+    hard to track and keep respecting state immutability
+sol 1: use constants 
+sol 2: redux toolkit
