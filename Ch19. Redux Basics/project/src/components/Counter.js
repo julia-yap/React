@@ -1,14 +1,14 @@
 import classes from "./Counter.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { counterActions } from "../store/index";
+import { counterActions } from "../store/counter";
 
 const Counter = () => {
   const dispatch = useDispatch();
 
   // Pass a function that determines which piece of data we want to extract
   // By using the hook, automatically subscribes to the store
-  const counter = useSelector((state) => state.counter);
-  const show = useSelector((state) => state.showCounter);
+  const counter = useSelector((state) => state.counter.counter);
+  const show = useSelector((state) => state.counter.showCounter);
 
   const incrementHandler = (amount = 1) => {
     dispatch(counterActions.increment({ amount }));
